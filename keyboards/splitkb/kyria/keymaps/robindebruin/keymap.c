@@ -28,9 +28,9 @@ enum layers {
     _QWERTY = 0,
     _SYM,
     _NAV,
+    _MOUSE,
     _FUNCTION,
     _RAISE,
-    _MOUSE,
 };
 
 enum custom_keycodes { Undo, Cut, Copy, Paste, NxtWord, PrvWord };
