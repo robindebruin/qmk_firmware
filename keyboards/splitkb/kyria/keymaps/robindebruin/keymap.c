@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | LShift |   Z  |   X  |   C  |   V  |   B  | [ {  |CapsLk|  | MOUSE|  ] } |   N  |   M  | ,  < | . >  | /  ? | esc/RShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |Option| CMD | LCtrl/| Space| Nmbrs|  | Nav  | Space|Option| CMD  |  ~   |
- *                        |   ⌥  |      | Enter|      | layer|  | Layer|      |      |   ⌥  |  `   |
+ *                        |   ⌥  |      | Enter|      | layer|  | Layer|      |   ⌥  |      |  `   |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |    ~   |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  (   |  )   |   +    |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |    |   |   \  |  :   |  ;   |  -   |  [   |  {   |      |  |      |   }  |   ]  |  _   |  ,   |  .   |  /   |        |
+ * |    |   |   \  |      |      |  -   |  [   |  {   |      |  |      |   }  |   ]  |  _   |      |      |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  | Fn   |      |      |      |      |
  *                        |      |      |      |      |      |  | layer|      |      |      |      |
@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SYM] = LAYOUT(
       KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , KC_EQL ,
      KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
-     KC_PIPE , KC_BSLS, KC_COLN, KC_SCLN, KC_MINS, KC_LBRC, KC_LCBR, _______, _______, KC_RCBR, KC_RBRC, KC_UNDS, KC_COMM,  KC_DOT, KC_SLSH, _______,
+     KC_PIPE , KC_BSLS, _______, _______, KC_MINS, KC_LBRC, KC_LCBR, _______, _______, KC_RCBR, KC_RBRC, KC_UNDS, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______,   TT(5), _______, _______, _______, _______
     ),
 /*
@@ -141,13 +141,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * Raise Layer: Number keys, media, navigation
 *
 * ,-------------------------------------------.                              ,-------------------------------------------.
-* |        |   1  |  2   |  3   |  4   |  5   |                              |  6   |  7   |  8   |  9   |  0   |        |
+* |        |   1  |  2   |  3   |  4   |  5   |                              |WheelU| Mbtn1|  MUp |Mbtn2 |  0   |        |
 * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-* |        |      | Prev | Play | Next | VolUp|                              | Left | Down | Up   | Right|      |        |
+* |        |      | Prev | Play | Next | VolUp|                              |WheelD| MLeft| Mdown|MRight|      |        |
 * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-* |        |      |      |      | Mute | VolDn|      |      |  |      |      | MLeft| Mdown| MUp  |MRight|      |        |
+* |        |      |      |      | Mute | VolDn|      |      |  |      |      |      |      |      |      |      |        |
 * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-*                        |      |Mbtn1 |Mbtn2 |Mbtn3 |      |  | Mbtn4|Mbtn5 |      |      |      |
+*                        |      |      |      |      |      |  |      |      |      |      |      |
 *                        |      |      |      |      |      |  |      |      |      |      |      |
 *                        `----------------------------------'  `----------------------------------'
 */
@@ -295,7 +295,7 @@ bool oled_task_user(void) {
                 oled_write_P(PSTR("Nav + media\n"), false);
                 break;
             case _SYM:
-                oled_write_P(PSTR("Numbers\n"), false);
+                oled_write_P(PSTR("Nummers & tekens\n"), false);
                 break;
             case _FUNCTION:
                 oled_write_P(PSTR("Function\n"), false);
@@ -304,15 +304,16 @@ bool oled_task_user(void) {
                 oled_write_P(PSTR("MOUSE\n"), false);
                 break;
             case _RAISE:
-                oled_write_P(PSTR("RAISE \n"), false);
+                oled_write_P(PSTR("MOUSE \n"), false);
                 break;
 
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
         }
+        s
 
-        // Write host Keyboard LED Status to OLEDs
-        led_t led_usb_state = host_keyboard_led_state();
+            // Write host Keyboard LED Status to OLEDs
+            led_t led_usb_state = host_keyboard_led_state();
         oled_write_P(led_usb_state.num_lock ? PSTR("NUMLCK ") : PSTR("       "), false);
         oled_write_P(led_usb_state.caps_lock ? PSTR("CAPLCK ") : PSTR("       "), false);
         oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
