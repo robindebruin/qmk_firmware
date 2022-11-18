@@ -76,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 /*
- * Sym Layer: Numbers and symbols
+ * Numbers and symbols
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |    `   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   =    |
@@ -303,17 +303,12 @@ bool oled_task_user(void) {
             case _MOUSE:
                 oled_write_P(PSTR("MOUSE\n"), false);
                 break;
-            case _RAISE:
-                oled_write_P(PSTR("MOUSE \n"), false);
-                break;
-
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
         }
-        s
 
-            // Write host Keyboard LED Status to OLEDs
-            led_t led_usb_state = host_keyboard_led_state();
+        // Write host Keyboard LED Status to OLEDs
+        led_t led_usb_state = host_keyboard_led_state();
         oled_write_P(led_usb_state.num_lock ? PSTR("NUMLCK ") : PSTR("       "), false);
         oled_write_P(led_usb_state.caps_lock ? PSTR("CAPLCK ") : PSTR("       "), false);
         oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
