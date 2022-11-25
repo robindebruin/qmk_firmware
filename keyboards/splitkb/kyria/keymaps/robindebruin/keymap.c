@@ -29,14 +29,13 @@ enum layers {
     _SYM,
     _NAV,
     _MOUSE,
-    _RAISE,
     _FUNCTION,
 };
 
 enum custom_keycodes { Undo, Cut, Copy, Paste, NxtWord, PrvWord };
 
 // Aliases for readability
-#define QWERTY DF(_QWERTY)
+#define QWERTY DF(_QWERTY)  ''
 
 #define SYM MO(_SYM)
 #define NAV MO(_NAV)
@@ -62,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |Ctr^/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |Ctrl/' "|
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | [ {  |CapsLk|  | MOUSE|  ] } |   N  |   M  | ,  < | . >  | /  ? | esc/RShift |
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | [ {  |MOUSE |  |CapsLk|  ] } |   N  |   M  | ,  < | . >  | /  ? | esc/RShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |Option| CMD | LCtrl/| Space| Nmbrs|  | Nav  |Option| Space| CMD  |  ~   |
  *                        |   ⌥  |      | Enter|      | layer|  | Layer|      |   ⌥  |      |  `   |
@@ -71,8 +70,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_TAB  , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,                                                     KC_Y,    KC_U ,   KC_I ,   KC_O ,  KC_P ,   KC_BSPC,
      CTL_ESC , KC_A ,  KC_S   ,  KC_D  ,   KC_F ,   KC_G ,                                                     KC_H,    KC_J ,   KC_K ,   KC_L ,  KC_SCLN, CTL_QUOT,
-     KC_LSFT , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B ,          KC_LBRC, KC_CAPS,         TG(4) , KC_RBRC, KC_N,    KC_M ,   KC_COMM, KC_DOT ,KC_SLSH, RSA_T(KC_ESC),
-                               KC_LALT , KC_LGUI, LCTL_T(KC_ENTER), KC_SPC , MO(1),           MO(2) , KC_RALT, KC_SPC ,  KC_RGUI, KC_GRV
+     KC_LSFT , KC_Z ,  KC_X   ,  KC_C  ,   KC_V,   KC_B,          KC_LBRC, MO(MOUSE),           KC_CAPS, KC_RBRC, KC_N,    KC_M ,   KC_COMM, KC_DOT ,KC_SLSH, RSA_T(KC_ESC),
+                               KC_LALT , KC_LGUI, LCTL_T(KC_ENTER), KC_SPC , MO(SYM),         MO(NAV)  , KC_RALT, KC_SPC ,  KC_RGUI, KC_GRV
     ),
 
 /*
@@ -93,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , KC_EQL ,
      KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
      KC_PIPE , KC_BSLS, _______, _______, KC_MINS, KC_LBRC, KC_LCBR, _______, _______, KC_RCBR, KC_RBRC, KC_UNDS, _______, _______, _______, _______,
-                                 _______, _______, _______, _______, _______,   TT(5), _______, _______, _______, _______
+                                 _______, _______, _______, _______, _______,   TT(4), _______, _______, _______, _______
     ),
 /*
  * Nav Layer: Media, navigation
@@ -116,47 +115,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
- * Navigation Layer: Cursor, Text Navigation
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |WheelU|      |      |                              |      |PrvWord| Up |NxtWord|      |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |       | LCTL |WheelD|LSFT | Bksp |                              | Bksp | Left | Down |Right | Del  |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        | Undo | Cut  | Copy |Paste |      |      |      |  |      |      |      | Home |      | End  |      |        |
- * `----------------------+------+------+------+      +------|  |------+      +------+------+------+----------------------'
- *                        |      |      |      |      |Space |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
+     * Raise Layer: Number keys, media, navigation
+     *
+     * ,-------------------------------------------.                              ,-------------------------------------------.
+     * |        |   1  |  2   |  3   |  4   |  5   |                              |  6   |  7   |  8   |  9   |  0   |        |
+     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+     * |        |      | Prev | Play | Next | VolUp|                              | Left | Down | Up   | Right|      |        |
+     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+     * |        |      |      |      | Mute | VolDn|      |      |  |      |      | MLeft| Mdown| MUp  |MRight|      |        |
+     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+     *                        |      |Mbtn1 |Mbtn2 |Mbtn3 |      |  | Mbtn4|Mbtn5 |      |      |      |
+     *                        |      |      |      |      |      |  |      |      |      |      |      |
+     *                        `----------------------------------'  `----------------------------------' 
+     */ 
     [_MOUSE] = LAYOUT(
-      _______, _______, _______, KC_WH_U, _______, _______,                                     _______, PrvWord, KC_UP  , NxtWord, _______, _______,
-      _______, _______, KC_LCTL, KC_WH_D, KC_LSFT, KC_BSPC,                                     KC_BSPC, KC_LEFT, KC_DOWN,KC_RIGHT, KC_DEL , _______,
-      _______,  Undo  ,   Cut  ,  Copy  , Paste  , _______, XXXXXXX, _______, _______, XXXXXXX, _______, KC_HOME, _______, KC_END , _______, _______,
-                                 _______, _______, _______, _______, KC_SPC , _______, _______, _______, _______, _______
-    ),
-
-
-/*
-* Raise Layer: Number keys, media, navigation
-*
-* ,-------------------------------------------.                              ,-------------------------------------------.
-* |        |   1  |  2   |  3   |  4   |  5   |                              |WheelU| Mbtn1|  MUp |Mbtn2 |  0   |        |
-* |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-* |        |      | Prev | Play | Next | VolUp|                              |WheelD| MLeft| Mdown|MRight|      |        |
-* |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-* |        |      |      |      | Mute | VolDn|      |      |  |      |      |      |      |      |      |      |        |
-* `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-*                        |      |      |      |      |      |  |      |      |      |      |      |
-*                        |      |      |      |      |      |  |      |      |      |      |      |
-*                        `----------------------------------'  `----------------------------------'
-*/
-    [_RAISE] = LAYOUT(
-            _______, KC_1, 	  KC_2,    KC_3,    KC_4,    KC_5,                                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-            _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLU,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-            _______, _______, _______, _______, KC_MUTE, KC_VOLD, _______, _______, _______, _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______,
-            _______, KC_BTN1, KC_BTN2, KC_BTN3, _______, KC_BTN4, KC_BTN5, _______, _______, _______
-            ),
+        _______, _______, _______, _______, _______, _______,                                     KC_WH_D, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, 
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,
+                                   _______, _______, _______, _______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, _______
+        ),
 
 /*
  * Function Layer: Function keys
@@ -204,60 +181,60 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {       
-        case Undo:
-            if (record->event.pressed) {
-                if (user_config.osIsWindows == 1) {
-                    tap_code16(C(KC_Z));
-                } else if (user_config.osIsWindows == 0) {
-                    tap_code16(G(KC_Z));
-                }
-            }
-            break;
-        case Cut:
-            if (record->event.pressed) {
-                if (user_config.osIsWindows == 1) {
-                    tap_code16(C(KC_X));
-                } else if (user_config.osIsWindows == 0) {
-                    tap_code16(G(KC_X));
-                }
-            }
-            break;
-        case Copy:
-            if (record->event.pressed) {
-                if (user_config.osIsWindows == 1) {
-                    tap_code16(C(KC_C));
-                } else if (user_config.osIsWindows == 0) {
-                    tap_code16(G(KC_C));
-                }
-            }
-            break;
-        case Paste:
-            if (record->event.pressed) {
-                if (user_config.osIsWindows == 1) {
-                    tap_code16(C(KC_V));
-                } else if (user_config.osIsWindows == 0) {
-                    tap_code16(G(KC_V));
-                }
-            }
-            break;
-        case PrvWord:
-            if (record->event.pressed) {
-                if (user_config.osIsWindows == 1) {
-                    tap_code16(C(KC_LEFT));
-                } else if (user_config.osIsWindows == 0) {
-                    tap_code16(A(KC_LEFT));
-                }
-            }
-            break;
-        case NxtWord:
-            if (record->event.pressed) {
-                if (user_config.osIsWindows == 1) {
-                    tap_code16(C(KC_RGHT));
-                } else if (user_config.osIsWindows == 0) {
-                    tap_code16(A(KC_RGHT));
-                }
-            }
-            break;
+        // case Undo:
+        //     if (record->event.pressed) {
+        //         if (user_config.osIsWindows == 1) {
+        //             tap_code16(C(KC_Z));
+        //         } else if (user_config.osIsWindows == 0) {
+        //             tap_code16(G(KC_Z));
+        //         }
+        //     }
+        //     break;
+        // case Cut:
+        //     if (record->event.pressed) {
+        //         if (user_config.osIsWindows == 1) {
+        //             tap_code16(C(KC_X));
+        //         } else if (user_config.osIsWindows == 0) {
+        //             tap_code16(G(KC_X));
+        //         }
+        //     }
+        //     break;
+        // case Copy:
+        //     if (record->event.pressed) {
+        //         if (user_config.osIsWindows == 1) {
+        //             tap_code16(C(KC_C));
+        //         } else if (user_config.osIsWindows == 0) {
+        //             tap_code16(G(KC_C));
+        //         }
+        //     }
+        //     break;
+        // case Paste:
+        //     if (record->event.pressed) {
+        //         if (user_config.osIsWindows == 1) {
+        //             tap_code16(C(KC_V));
+        //         } else if (user_config.osIsWindows == 0) {
+        //             tap_code16(G(KC_V));
+        //         }
+        //     }
+        //     break;
+        // case PrvWord:
+        //     if (record->event.pressed) {
+        //         if (user_config.osIsWindows == 1) {
+        //             tap_code16(C(KC_LEFT));
+        //         } else if (user_config.osIsWindows == 0) {
+        //             tap_code16(A(KC_LEFT));
+        //         }
+        //     }
+        //     break;
+        // case NxtWord:
+        //     if (record->event.pressed) {
+        //         if (user_config.osIsWindows == 1) {
+        //             tap_code16(C(KC_RGHT));
+        //         } else if (user_config.osIsWindows == 0) {
+        //             tap_code16(A(KC_RGHT));
+        //         }
+        //     }
+        //     break;
     }
     return true;
 };
