@@ -73,21 +73,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  ,     KC_Q ,  KC_W   ,  KC_E  ,           KC_R ,              KC_T ,                                                      KC_Y,    KC_U ,   KC_I ,            KC_O ,     KC_P ,       KC_BSPC,
      SFT_T(KC_ESC), KC_A ,  KC_S   ,  KC_D  ,    LT(NAV,KC_F),    LT(MOUSE,KC_G) ,                                                      KC_H,    KC_J ,   KC_K ,            KC_L ,   KC_SCLN,      CTL_QUOT,
      SFT_T(KC_ESC) ,     KC_Z ,  KC_X   ,  KC_C  ,           KC_V ,              KC_B , KC_LBRC, OSL(FKEYS),               KC_CAPS, KC_RBRC, KC_N,    KC_M ,   KC_COMM,        KC_DOT ,   KC_SLSH,  RSFT_T(KC_ESC),
-                           LCTL_T(KC_ENTER),        KC_LALT ,            KC_LGUI, KC_ENTER,   MO(SYM),            MO(NAV)  , LT(MOUSE, KC_SPC) , LT(KC_RGUI,KC_SPC) ,   KC_LALT , KC_GRV  
+                           LCTL_T(KC_ENTER),        KC_LALT ,            KC_LGUI, KC_ENTER,   MO(SYM),            MO(NAV)  , LT(MOUSE, KC_SPC) , LT(FKEYS,KC_SPC) ,   KC_LALT , KC_GRV  
     ),
 
 /* 
  * Symbols
  *
  * !@#$%  ^&*
- * a-([{  }])_+
- * zx=>b  \m .,.
+ * =>({[  ]})_-
+ * ±-
  * 
  */
     [_SYM] = LAYOUT(
-     _______ , KC_EXLM,   KC_AT , KC_HASH,  KC_DLR,        KC_PERC,                                      KC_CIRC, KC_AMPR, KC_ASTR, _______, _______, _______,
-     _______ , KC_EQL, KC_RABK, KC_LPRN,  KC_LCBR,       KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_UNDS, KC_MINS,  _______,
-     _______ , KC_TILD, KC_MINS,  KC_EQL,  _______, _______, _______, _______, _______, _______, KC_BSLS, _______, _______, _______, _______, _______,
+     _______ , KC_EXLM,   KC_AT, KC_HASH,  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, _______, _______, _______,
+     _______ , KC_EQL , KC_RABK, KC_LPRN,  KC_LCBR, KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_UNDS, KC_MINS,  _______,
+     _______ , _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, KC_TILD, KC_PIPE, KC_SLSH, KC_BSLS, _______,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
@@ -238,32 +238,46 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         // QMK Logo and version information
         // clang-format off
-        static const char PROGMEM qmk_logo[] = {
-            0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
-            0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
-            0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
+        // static const char PROGMEM qmk_logo[] = {
+        //     0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
+        //     0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
+        //     0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
         // clang-format on
 
-        oled_write_P(qmk_logo, false);
-        oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
+        // oled_write_P(qmk_logo, false);
+        // oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
 
         // Host Keyboard Layer Status
-        oled_write_P(PSTR("Layer: "), false);
+
         switch (get_highest_layer(layer_state | default_layer_state)) {
             case _QWERTY:
                 oled_write_P(PSTR("QWERTY\n"), false);
-                break;
-            case _NAV:
-                oled_write_P(PSTR("Nav + media\n"), false);
+                oled_write_P(PSTR("\n"), false);
+                oled_write_P(PSTR("\n"), false);
+                oled_write_P(PSTR("\n"), false);
+                oled_write_P(PSTR("\n"), false);
+                oled_write_P(PSTR("\n"), false);
                 break;
             case _SYM:
-                oled_write_P(PSTR("Tekens\n"), false);
+                oled_write_P(PSTR("Nav + medi\n\n"), false);
+                oled_write_P(PSTR("! @ # $ %  ^ & * \n"), false);
+                oled_write_P(PSTR("\n"), false);
+                oled_write_P(PSTR("= > ( { [ ] } ) _ -"), false);
+                oled_write_P(PSTR("\n\n"), false);
+                oled_write_P(PSTR("             | / \\"), false);
                 break;
             case _FUNCTION:
                 oled_write_P(PSTR("Nummers FN\n"), false);
+                oled_write_P(PSTR("   5\n"), false);
+                oled_write_P(PSTR("  f5\n"), false);
+                oled_write_P(PSTR(" f11\n"), false);
+                oled_write_P(PSTR("\n"), false);
                 break;
             case _MOUSE:
                 oled_write_P(PSTR("MOUSE\n"), false);
+                break;
+            case _NAV:
+                oled_write_P(PSTR("nav \n"), false);
                 break;
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
