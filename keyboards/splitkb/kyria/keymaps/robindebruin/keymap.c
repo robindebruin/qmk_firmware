@@ -79,13 +79,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* 
  * Symbols
  *
- * !@#$%  ^&*
+ * !@#$%  ^&*+
  * =>({[  ]})_-
  * ±-
  * 
  */
     [_SYM] = LAYOUT(
-     _______ , KC_EXLM,   KC_AT, KC_HASH,  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, _______, _______, _______,
+     _______ , KC_EXLM,   KC_AT, KC_HASH,  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_PLUS, _______, _______,
      _______ , KC_EQL , KC_RABK, KC_LPRN,  KC_LCBR, KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_UNDS, KC_MINS,  _______,
      _______ , _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, KC_TILD, KC_PIPE, KC_SLSH, KC_BSLS, _______,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -259,8 +259,8 @@ bool oled_task_user(void) {
                 oled_write_P(PSTR("\n"), false);
                 break;
             case _SYM:
-                oled_write_P(PSTR("Nav + medi\n\n"), false);
-                oled_write_P(PSTR("! @ # $ %  ^ & * \n"), false);
+                oled_write_P(PSTR("Sym \n\n"), false);
+                oled_write_P(PSTR("! @ # $ %  ^ & * + \n"), false);
                 oled_write_P(PSTR("\n"), false);
                 oled_write_P(PSTR("= > ( { [ ] } ) _ -"), false);
                 oled_write_P(PSTR("\n\n"), false);
@@ -277,7 +277,7 @@ bool oled_task_user(void) {
                 oled_write_P(PSTR("MOUSE\n"), false);
                 break;
             case _NAV:
-                oled_write_P(PSTR("nav \n"), false);
+                oled_write_P(PSTR("Arrows n Media\n"), false);
                 break;
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
