@@ -61,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  Bksp  |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctr^/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |Ctrl/' "|
+ * |shft/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |Ctrl/' "|
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  | [ {  |MOUSE |  |CapsLk|  ] } |   N  |   M  | ,  < | . >  | /  ? | esc/RAltShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -70,31 +70,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-     KC_TAB  , KC_Q ,  KC_W   ,  KC_E  ,           KC_R ,            KC_T ,                                                      KC_Y,    KC_U ,   KC_I ,            KC_O ,     KC_P ,       KC_BSPC,
-     CTL_ESC , KC_A ,  KC_S   ,  KC_D  ,  LT(MOUSE,KC_F),    LT(NAV,KC_G) ,                                                      KC_H,    KC_J ,   KC_K ,            KC_L ,   KC_SCLN,      CTL_QUOT,
-     KC_LSFT , KC_Z ,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),               KC_CAPS, KC_RBRC, KC_N,    KC_M ,   KC_COMM,        KC_DOT ,   KC_SLSH, RSA_T(KC_ESC),
-                       LCTL_T(KC_ENTER),        KC_LALT ,          KC_LGUI, KC_ENTER,   MO(SYM),            MO(NAV)  , LT(MOUSE, KC_SPC) , LT(KC_RGUI,KC_SPC) ,   KC_LALT , KC_GRV  
+     KC_TAB  ,     KC_Q ,  KC_W   ,  KC_E  ,           KC_R ,              KC_T ,                                                      KC_Y,    KC_U ,   KC_I ,            KC_O ,     KC_P ,       KC_BSPC,
+     SFT_T(KC_ESC), KC_A ,  KC_S   ,  KC_D  ,    LT(NAV,KC_F),    LT(MOUSE,KC_G) ,                                                      KC_H,    KC_J ,   KC_K ,            KC_L ,   KC_SCLN,      CTL_QUOT,
+     SFT_T(KC_ESC) ,     KC_Z ,  KC_X   ,  KC_C  ,           KC_V ,              KC_B , KC_LBRC, OSL(FKEYS),               KC_CAPS, KC_RBRC, KC_N,    KC_M ,   KC_COMM,        KC_DOT ,   KC_SLSH,  RSFT_T(KC_ESC),
+                           LCTL_T(KC_ENTER),        KC_LALT ,            KC_LGUI, KC_ENTER,   MO(SYM),            MO(NAV)  , LT(MOUSE, KC_SPC) , LT(KC_RGUI,KC_SPC) ,   KC_LALT , KC_GRV  
     ),
 
-/*
- * Numbers and symbols
+/* 
+ * Symbols
  *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |    `   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |    ~   |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  (   |  )   |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |    |   |   \  |  =   |  -   |  (   |  [   |  {   |      |  |      |   }  |   ]  |  )   |  _   |   +  |      |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
+ * !@#$%  ^&*
+ * a-([{  }])_+
+ * zx=>b  \m .,.
+ * 
  */
     [_SYM] = LAYOUT(
-      KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , _______ ,
-     KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
-     KC_PIPE , KC_BSLS, KC_EQL , KC_LPRN, KC_MINS, KC_LBRC, KC_LCBR, _______, _______, KC_RCBR, KC_RBRC, KC_UNDS, KC_RPRN, KC_PLUS, _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+     _______ , KC_EXLM,   KC_AT , KC_HASH,  KC_DLR,        KC_PERC,                                      KC_CIRC, KC_AMPR, KC_ASTR, _______, _______, _______,
+     _______ , KC_EQL, KC_RABK, KC_LPRN,  KC_LCBR,       KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_UNDS, KC_MINS,  _______,
+     _______ , KC_TILD, KC_MINS,  KC_EQL,  _______, _______, _______, _______, _______, _______, KC_BSLS, _______, _______, _______, _______, _______,
+                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
  * Nav Layer: Media, navigation
@@ -118,17 +112,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 /*
      * MOUSE
-     *
-     * ,-------------------------------------------.                              ,-------------------------------------------.
-     * |        |   1  |  2   |  3   |  4   |  5   |                              |  6   |  7   |  8   |  9   |  0   |        |
-     * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-     * |        |      | Prev | Play | Next | VolUp|                              | Left | Down | Up   | Right|      |        |
-     * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-     * |        |      |      |      | Mute | VolDn|      |      |  |      |      | MLeft| Mdown| MUp  |MRight|      |        |
-     * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-     *                        |      |Mbtn1 |Mbtn2 |Mbtn3 |      |  | Mbtn4|Mbtn5 |      |      |      |
-     *                        |      |      |      |      |      |  |      |      |      |      |      |
-     *                        `----------------------------------'  `----------------------------------' 
      */ 
     [_MOUSE] = LAYOUT(
         _______, _______, _______, _______, _______, _______,                                     KC_WH_D, KC_BTN1, KC_MS_U, KC_BTN2, KC_ACL0, _______,
@@ -152,11 +135,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_FUNCTION] = LAYOUT(
-      _______,  _______,  _______,  _______,  _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______ ,   KC_1 ,    KC_2 ,   KC_3 ,     KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , _______ ,
       _______,  KC_F1  ,  KC_F2  ,  KC_F3  ,  KC_F4  ,  KC_F5 ,                                     KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10, _______,
-      _______,  KC_F11 ,  _______,  _______,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_F12, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
+      _______,  _______,  _______,  _______,  _______,  KC_F11, _______, _______, _______, _______, KC_F12, _______, _______, _______, _______, _______,
+                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),  
 
 
 // /*
@@ -274,10 +257,10 @@ bool oled_task_user(void) {
                 oled_write_P(PSTR("Nav + media\n"), false);
                 break;
             case _SYM:
-                oled_write_P(PSTR("Nummers & tekens\n"), false);
+                oled_write_P(PSTR("Tekens\n"), false);
                 break;
             case _FUNCTION:
-                oled_write_P(PSTR("Function\n"), false);
+                oled_write_P(PSTR("Nummers FN\n"), false);
                 break;
             case _MOUSE:
                 oled_write_P(PSTR("MOUSE\n"), false);
