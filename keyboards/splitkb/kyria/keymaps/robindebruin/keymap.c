@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer: QWERTY
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  Bksp  |
+ * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  i  |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |shft/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |Ctrl/' "|
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -70,9 +70,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-     KC_TAB  ,      KC_Q ,  KC_W   ,  KC_E  ,           KC_R ,              KC_T ,                                                      KC_Y,    KC_U ,   KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
-     SFT_T(KC_ESC), KC_A ,  KC_S   ,  KC_D  ,    LT(NAV,KC_F),    LT(MOUSE,KC_G) ,                                                      KC_H,    KC_J ,   KC_K ,            KC_L ,   KC_SCLN,       CTL_QUOT,
-     SFT_T(KC_ESC), KC_Z ,  KC_X   ,  KC_C  ,           KC_V ,              KC_B , KC_LBRC, OSL(FKEYS),               KC_CAPS, KC_RBRC, KC_N,    KC_M ,   KC_COMM,        KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
+     KC_TAB  ,      KC_Q ,  KC_W   ,  KC_E  ,           KC_R ,              KC_T ,                                                      KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
+     SFT_T(KC_ESC), LCTL_T(KC_A) ,  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    LT(MOUSE,KC_G) ,                                                      KC_H, RCTL_T(KC_J),   RALT_T(KC_K) ,    RCMD_T(KC_L) ,   KC_SCLN,       CTL_QUOT,
+     SFT_T(KC_ESC), KC_Z ,  KC_X   ,  KC_C  ,           KC_V ,              KC_B , KC_LBRC, OSL(FKEYS),               KC_CAPS, KC_RBRC, KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
                          LCTL_T(KC_ENTER),  KC_LALT ,  CMD_T(KC_ENTER)	, KC_ENTER,    MO(SYM),            MO(NAV)  , LT(MOUSE, KC_SPC) , LT(FKEYS,KC_SPC) ,   MO(SYM) , KC_GRV  
     ),
 
@@ -85,8 +85,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * 
  */
     [_SYM] = LAYOUT(
-     _______ , KC_EXLM,   KC_AT, KC_HASH,  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_PLUS, _______, _______,
-     _______ , KC_EQL , KC_RABK, KC_LPRN,  KC_LCBR, KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_UNDS, KC_MINS,  _______,
+     _______ , KC_EXLM,   KC_AT, KC_HASH,  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_PLUS, KC_MINS, _______,
+     _______ , KC_EQL , KC_LABK, KC_LPRN,  KC_LCBR, KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_RABK, KC_UNDS, _______,
      _______ , _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, KC_TILD, KC_PIPE, KC_SLSH, KC_BSLS, _______,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -249,9 +249,9 @@ bool oled_task_user(void) {
                 break;
             case _SYM:
                 oled_write_P(PSTR("Sym \n\n"), false);
-                oled_write_P(PSTR("! @ # $ %  ^ & * +  \n"), false);
+                oled_write_P(PSTR("! @ # $ %  ^ & * + - \n"), false);
                 oled_write_P(PSTR("\n"), false);
-                oled_write_P(PSTR("= > ( { [ ] } ) _ -"), false);
+                oled_write_P(PSTR("= > ( { [ ] } ) _ "), false);
                 oled_write_P(PSTR("\n\n"), false);
                 oled_write_P(PSTR("             | / \\"), false);
                 break;
