@@ -70,8 +70,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-     KC_TAB  ,      KC_Q ,  KC_W   ,  KC_E  ,           KC_R ,              KC_T ,                                                      KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
-     SFT_T(KC_ESC), LCTL_T(KC_A) ,  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    LT(MOUSE,KC_G) ,                                                      KC_H, RCTL_T(KC_J),   RALT_T(KC_K) ,    RCMD_T(KC_L) ,   KC_SCLN,       CTL_QUOT,
+     KC_TAB  ,      KC_Q ,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                                      KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
+     SFT_T(KC_ESC), LCTL_T(KC_A) ,  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    LT(MOUSE,KC_G) ,                             KC_H, RCTL_T(KC_J),   RALT_T(KC_K) ,    RCMD_T(KC_L) ,   KC_SCLN,   RSFT_T(KC_QUOTE),
      SFT_T(KC_ESC), KC_Z ,  KC_X   ,  KC_C  ,           KC_V ,              KC_B , KC_LBRC, OSL(FKEYS),               KC_CAPS, KC_RBRC, KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
                          LCTL_T(KC_ENTER),  KC_LALT ,  CMD_T(KC_ENTER)	, KC_ENTER,    MO(SYM),            MO(NAV)  , LT(MOUSE, KC_SPC) , LT(FKEYS,KC_SPC) ,   MO(SYM) , KC_GRV  
     ),
@@ -106,17 +106,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_NAV] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_VOLU, _______,
-      KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, _______, _______,                                     KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, _______,
+      _______, _______, _______, _______, _______, _______,                                     KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
      * MOUSE
      */ 
+    // deze laag onhoog zodat die de media knoppen erft?
+    // en dan mouse layer van G naar T of B, en dan acl012 ook naar de linkerhand
     [_MOUSE] = LAYOUT(
-        _______, _______, _______, _______, _______, _______,                                     KC_WH_D, KC_BTN1, KC_MS_U, KC_BTN2, KC_ACL0, _______,
-        _______, _______, _______, _______, _______, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, KC_ACL1, _______, 
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_ACL2, _______,
+        _______, KC_ACL0, KC_ACL2, _______, KC_BTN1, _______,                                     KC_WH_D, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, 
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
         ),
 
