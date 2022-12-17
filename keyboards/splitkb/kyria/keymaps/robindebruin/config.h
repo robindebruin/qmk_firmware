@@ -16,8 +16,13 @@
 
 #pragma once
 
+#define TAPPING_TERM 300
+
 // Lets you roll mod-tap keys
 #define IGNORE_MOD_TAP_INTERRUPT
+
+// This mode functions like Accelerated mode, however, you can hold KC_ACL0, KC_ACL1 and KC_ACL2 to momentarily (while held) set the cursor and scroll speeds to constant speeds. When no acceleration keys are held, this mode is identical to Accelerated mode, and can be modified using all of the relevant settings.,
+#define MK_COMBINED
 
 #undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY 0
