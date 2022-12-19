@@ -116,8 +116,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // deze laag onhoog zodat die de media knoppen erft?
     // en dan mouse layer van G naar T of B, en dan acl012 ook naar de linkerhand
     [_MOUSE] = LAYOUT(
-        _______, KC_ACL0, KC_BTN2, _______, KC_BTN1, _______,                                     KC_WH_D, KC_BTN1, _______, KC_BTN2, _______, _______,
-        _______, _______, _______, _______, _______, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, 
+        _______, KC_ACL0, KC_BTN2, _______, KC_BTN1, _______,                                     KC_WH_D, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, 
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
         ),
