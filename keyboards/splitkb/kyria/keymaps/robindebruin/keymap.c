@@ -46,12 +46,10 @@ enum custom_keycodes { Undo, Cut, Copy, Paste, NxtWord, PrvWord };
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
 #define CTL_MINS MT(MOD_RCTL, KC_MINUS)
 #define ALT_ENT MT(MOD_LALT, KC_ENT)
-
-// Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
-// The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
-// produces the key `tap` when tapped (i.e. pressed and released).
-
-// LT(MOUSE, KC_SPC)
+#define KC_CAPW LGUI(LSFT(KC_3))       // Capture whole screen
+#define KC_CPYW LGUI(LSFT(LCTL(KC_3))) // Copy whole screen
+#define KC_CAPP LGUI(LSFT(KC_4))       // Capture portion of screen
+#define KC_CPYP LGUI(LSFT(LCTL(KC_4))) // Copy portion of screen
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -70,10 +68,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-     KC_TAB  ,      KC_Q ,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                                      KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
+     KC_TAB  ,      KC_Q ,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
     KC_LSFT , LCTL_T(KC_A) ,  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    ALT_T(KC_L) ,   RCTL_T(KC_SCLN),   RSFT_T(KC_QUOTE),
      SFT_T(KC_ESC), KC_Z ,  KC_X   ,  KC_C  ,           KC_V ,              KC_B , KC_LBRC, OSL(FKEYS),               KC_CAPS, KC_RBRC, KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
-                         LCTL_T(KC_ENTER),  LT(NAV, KC_ENTER) ,  LT(MOUSE, KC_ENTER)	, KC_ENTER,    MO(SYM),            LT(NAV,KC_ENTER)  , LT(MOUSE, KC_SPC) , LT(FKEYS,KC_SPC) ,   MO(SYM) , KC_GRV  
+                         LCTL_T(KC_ENTER),  LT(NAV, KC_ENTER) ,  LT(MOUSE, KC_ENTER)	, KC_ENTER,    MO(SYM),            LT(NAV,KC_ENTER)  , LT(MOUSE, KC_SPC) , LT(FKEYS,KC_SPC) ,   MO(SYM) , KC_GRAVE  
     ),
 
 /* 
@@ -85,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * 
  */
     [_SYM] = LAYOUT(
-     _______ , KC_EXLM,   KC_AT, KC_HASH,  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_PLUS, KC_MINS, _______,
+     _______ , KC_EXLM,   KC_AT, KC_HASH,  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_PLUS, _______,
      _______ , KC_EQL , KC_LABK, KC_LPRN,  KC_LCBR, KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_RABK, KC_UNDS, _______,
      _______ , _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, KC_TILD, KC_PIPE, KC_SLSH, KC_BSLS, _______,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -117,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // en dan mouse layer van G naar T of B, en dan acl012 ook naar de linkerhand
     [_MOUSE] = LAYOUT(
         _______, KC_ACL0, KC_BTN2, _______, KC_BTN1, _______,                                     KC_WH_D, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______,
-        _______, _______, _______, _______, _______, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, 
+        _______, _______, _______, _______, KC_CAPP, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, 
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
         ),
@@ -240,7 +238,7 @@ bool oled_task_user(void) {
                 break;
             case _SYM:
                 oled_write_P(PSTR("Sym \n\n"), false);
-                oled_write_P(PSTR("! @ # $ %  ^ & * + - \n"), false);
+                oled_write_P(PSTR("! @ # $ %  ^ & * - +\n"), false);
                 oled_write_P(PSTR("\n"), false);
                 oled_write_P(PSTR("= > ( { [ ] } ) _ "), false);
                 oled_write_P(PSTR("\n\n"), false);
