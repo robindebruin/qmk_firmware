@@ -68,8 +68,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-     KC_TAB  ,      KC_Q ,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
-    KC_LSFT , LCTL_T(KC_A) ,  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    ALT_T(KC_L) ,   RCTL_T(KC_SCLN),   RSFT_T(KC_QUOTE),
+     KC_TAB  ,      KC_Q ,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_SCLN ,        KC_BSPC,
+    KC_LSFT , LCTL_T(KC_A) ,  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    ALT_T(KC_L) ,   RCTL_T(KC_P),   RSFT_T(KC_QUOTE),
      SFT_T(KC_ESC), KC_Z ,  KC_X   ,  KC_C  ,           KC_V ,              KC_B , KC_LBRC, OSL(FKEYS),               KC_CAPS, KC_RBRC, KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
                          LCTL_T(KC_ENTER),  LT(NAV, KC_ENTER) ,  LT(MOUSE, KC_ENTER)	, KC_ENTER,    MO(SYM),            LT(NAV,KC_ENTER)  , LT(MOUSE, KC_SPC) , LT(FKEYS,KC_SPC) ,   MO(SYM) , KC_GRAVE  
     ),
