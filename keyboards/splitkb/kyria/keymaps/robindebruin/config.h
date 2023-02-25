@@ -37,6 +37,14 @@
 #define MOUSEKEY_WHEEL_MAX_SPEED 8
 
 #undef MOUSEKEY_MAX_SPEED
-#define MOUSEKEY_MAX_SPEED 4
+#define MOUSEKEY_MAX_SPEED 3
 #undef MOUSEKEY_TIME_TO_MAX
-#define MOUSEKEY_TIME_TO_MAX 52
+#define MOUSEKEY_TIME_TO_MAX 42 // 52
+
+// hoeveel tijd je hebt om de leader key sequence te voltooien
+#define LEADER_TIMEOUT 300
+#define LEADER_PER_KEY_TIMING // dan komt er per key tijd bij om de sequence te voltooien
+
+// Allows to use either side as the master. Look at the documentation for info:
+// https://docs.qmk.fm/#/config_options?id=setting-handedness
+#define EE_HANDS

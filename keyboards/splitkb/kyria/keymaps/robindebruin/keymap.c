@@ -32,7 +32,10 @@ enum layers {
     _FUNCTION,
 };
 
-enum custom_keycodes { Undo, Cut, Copy, Paste, NxtWord, PrvWord };
+enum custom_keycodes {
+    // Undo, Cut, Copy, Paste, NxtWord, PrvWord
+    SELWORD
+};
 
 // Aliases for readability
 #define QWERTY DF(_QWERTY)  ''
@@ -50,6 +53,10 @@ enum custom_keycodes { Undo, Cut, Copy, Paste, NxtWord, PrvWord };
 #define KC_CPYW LGUI(LSFT(LCTL(KC_3))) // Copy whole screen
 #define KC_CAPP LGUI(LSFT(KC_4))       // Capture portion of screen
 #define KC_CPYP LGUI(LSFT(LCTL(KC_4))) // Copy portion of screen
+#define KC_WBCK LGUI(KC_LEFT)          // Chrome back in history
+#define KC_WFRWD LGUI(KC_RIGHT)        // Chrome forward in history
+#define KC_WLFT LGUI(LALT(KC_LEFT))    // Chrome go to left tab
+#define KC_WRGHT LGUI(LALT(KC_RIGHT))  // Chrome go to right tab
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -63,15 +70,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  | [ {  |MOUSE |  |CapsLk|  ] } |   N  |   M  | ,  < | . >  | /  ? | esc/RAltShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |LCtrl/| alt  | cmd  | enter| Nmbrs|  | Nav  |Option| Space| CMD  |  ~   |
+ *                        |LCtrl/| alt  | cmd  |QKLEAD| Nmbrs|  | Nav  |Option| Space| CMD  |  ~   |
  *                        |   ⌥  |      |      |      | layer|  | Layer|      |   ⌥  |      |  `   |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-     KC_TAB  ,        KC_Q ,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
-     KC_LSFT, LCTL_T(KC_A) ,  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    ALT_T(KC_L) ,   RCTL_T(KC_SCLN),   RSFT_T(KC_QUOTE),
-     SFT_T(KC_ESC),   KC_Z ,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),         KC_CAPS, TG(MOUSE), KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
-                         LCTL_T(KC_ENTER),  LALT_T(KC_ENTER) ,  CMD_T(KC_ENTER)	, KC_ENTER,    MO(SYM),         LT(NAV,KC_ENTER)  , LT(MOUSE, KC_SPC) , LT(FKEYS,KC_SPC) ,   MO(SYM) , KC_GRAVE  
+     KC_TAB ,         KC_Q,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
+     KC_LSFT, LCTL_T(KC_A),  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    RALT_T(KC_L) ,   RCTL_T(KC_SCLN),      RSFT_T(KC_QUOTE),
+     SFT_T(KC_ESC),   KC_Z,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),     KC_CAPS, TG(MOUSE),      KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
+                      LCTL_T(KC_ENTER),  LALT_T(KC_ENTER) ,  KC_LEAD	, KC_ENTER,    MO(SYM),     LT(NAV,KC_ENTER)  , LT(FKEYS, KC_SPC) , LT(SYM,KC_SPC) ,   TG(MOUSE) , KC_GRAVE  
     ),
 
 /* 
@@ -114,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // deze laag onhoog zodat die de media knoppen erft?
     // en dan mouse layer van G naar T of B, en dan acl012 ook naar de linkerhand
     [_MOUSE] = LAYOUT(
-        _______, KC_ACL0, KC_BTN2, _______, KC_BTN1, _______,                                     KC_WH_D, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______,
+        _______, KC_ACL0, KC_BTN2, _______, KC_BTN1, _______,                                     KC_WBCK, KC_BTN1, KC_MS_U, KC_BTN2, KC_WFRWD, _______,
         _______, _______, _______, _______, KC_CAPP, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, _______, 
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -124,8 +131,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Function Layer: Function keys
  */
     [_FUNCTION] = LAYOUT(
-      _______ ,   KC_1 ,    KC_2 ,   KC_3 ,     KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , _______ ,
       _______,  KC_F1  ,  KC_F2  ,  KC_F3  ,  KC_F4  ,  KC_F5 ,                                     KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10, _______,
+      _______ ,   KC_1 ,    KC_2 ,   KC_3 ,     KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , _______ ,
       _______,  _______,  _______,  _______,  KC_F11 ,_______, _______, _______, _______, _______, _______, KC_F12, _______, _______, _______, _______,
                                     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),  
@@ -155,6 +162,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {       
+        case SELWORD:  // Selects the current word under the cursor.
+        if (record->event.pressed) {
+            // SEND_STRING(SS_LCTL(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))));
+            // Mac users, change LCTL to LALT:
+            SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))));
+        }
+        return false;
         // case Undo:
         //     if (record->event.pressed) {
         //         if (user_config.osIsWindows == 1) {
@@ -214,7 +228,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 };
 
 
-/* The default OLED and rotary encoder code can be found at the bottom of qmk_firmware/keyboards/splitkb/kyria/rev1/rev1.c
+
+LEADER_EXTERNS();
+
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    leading = false;
+    leader_end();
+
+    SEQ_ONE_KEY(KC_W) {    
+    // select word
+    SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))));
+
+    }
+    SEQ_ONE_KEY(KC_F) {
+      // Anything you can do in a macro.
+      SEND_STRING("QMK is awesome.");
+    }
+    SEQ_TWO_KEYS(KC_D, KC_D) {
+    //   SEND_STRING(SS_LCTL("a") SS_LCTL("c"));
+      SEND_STRING("1234 jQMK is awesome.");
+
+    }
+    SEQ_THREE_KEYS(KC_D, KC_D, KC_S) {
+      SEND_STRING("https://start.duckduckgo.com\n");
+    }
+    SEQ_TWO_KEYS(KC_A, KC_S) {
+      register_code(KC_LGUI);
+      register_code(KC_S);
+      unregister_code(KC_S);
+      unregister_code(KC_LGUI);
+    }
+  }
+}
+
+
+
+/* The default OLED and rfotary encoder code can be found at the bottom of qmk_firmware/keyboards/splitkb/kyria/rev1/rev1.c
  * These default settings can be overriden by your own settings in your keymap.c
  * For your convenience, here's a copy of those settings so that you can uncomment them if you wish to apply your own modifications.
  * DO NOT edit the rev1.c file; instead override the weakly defined default functions by your own.
