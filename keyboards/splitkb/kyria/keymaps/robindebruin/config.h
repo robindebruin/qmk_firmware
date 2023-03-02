@@ -37,9 +37,9 @@
 #define MOUSEKEY_WHEEL_MAX_SPEED 8
 
 #undef MOUSEKEY_MAX_SPEED
-#define MOUSEKEY_MAX_SPEED 3
+#define MOUSEKEY_MAX_SPEED 3 // 3
 #undef MOUSEKEY_TIME_TO_MAX
-#define MOUSEKEY_TIME_TO_MAX 42 // 52
+#define MOUSEKEY_TIME_TO_MAX 42 // 42 // 52
 
 // hoeveel tijd je hebt om de leader key sequence te voltooien
 #define LEADER_TIMEOUT 300

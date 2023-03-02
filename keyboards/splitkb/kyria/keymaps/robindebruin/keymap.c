@@ -77,8 +77,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_TAB ,         KC_Q,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
      KC_LSFT, LCTL_T(KC_A),  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    RALT_T(KC_L) ,   RCTL_T(KC_SCLN),      RSFT_T(KC_QUOTE),
-     SFT_T(KC_ESC),   KC_Z,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),     KC_CAPS, TG(MOUSE),      KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
-                      LCTL_T(KC_ENTER),  LALT_T(KC_ENTER) ,  KC_LEAD	, KC_ENTER,    MO(SYM),     LT(NAV,KC_ENTER)  , LT(FKEYS, KC_SPC) , LT(SYM,KC_SPC) ,   TG(MOUSE) , KC_GRAVE  
+     LCTL_T(KC_ESC),   KC_Z,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),     KC_CAPS, TG(MOUSE),      KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
+                      LALT_T(KC_ENTER),  LCMD_T(KC_ENTER) ,  KC_LEAD	, KC_ENTER,    MO(SYM),     LT(NAV,KC_ENTER)  , LT(FKEYS, KC_SPC) , LT(SYM,KC_SPC) ,   TG(MOUSE) , KC_GRAVE  
     ),
 
 /* 
@@ -228,27 +228,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 };
 
 
-
+// leader keys 
+// start with leader key followed by any sequence defined below
 LEADER_EXTERNS();
-
 void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
     leading = false;
     leader_end();
 
     SEQ_ONE_KEY(KC_W) {    
-    // select word
-    SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))));
-
+    // select word and copy
+    // ss = send string feature_send_string
+    // X prefix is nodig ipv KC
+      SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("c"));
     }
-    SEQ_ONE_KEY(KC_F) {
-      // Anything you can do in a macro.
-      SEND_STRING("QMK is awesome.");
+    SEQ_ONE_KEY(KC_L) {    
+      SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("c"));
+      // SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)));
+    }
+
+    // todo add print screen
+
+    SEQ_ONE_KEY(KC_P) {
+      // print portion of the screen      
+      SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_4)))  );
+      layer_on(_MOUSE);
+
     }
     SEQ_TWO_KEYS(KC_D, KC_D) {
     //   SEND_STRING(SS_LCTL("a") SS_LCTL("c"));
       SEND_STRING("1234 jQMK is awesome.");
-
     }
     SEQ_THREE_KEYS(KC_D, KC_D, KC_S) {
       SEND_STRING("https://start.duckduckgo.com\n");
