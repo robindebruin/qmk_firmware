@@ -5,3 +5,4 @@ OLED_DRIVER = SSD1306   # Enables the use of OLED displays
 MOUSEKEY_ENABLE = yes
 # CONSOLE_ENABLE = yes
 LEADER_ENABLE = yes        # Enable the Leader Key feature
+ 

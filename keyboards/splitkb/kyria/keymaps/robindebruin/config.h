@@ -24,10 +24,24 @@
 // This mode functions like Accelerated mode, however, you can hold KC_ACL0, KC_ACL1 and KC_ACL2 to momentarily (while held) set the cursor and scroll speeds to constant speeds. When no acceleration keys are held, this mode is identical to Accelerated mode, and can be modified using all of the relevant settings.,
 #define MK_COMBINED
 
-#undef MOUSEKEY_DELAY
-#define MOUSEKEY_DELAY 0
 #undef MOUSEKEY_INTERVAL
+#undef MOUSEKEY_DELAY
+#undef MOUSEKEY_TIME_TO_MAX
+#undef MOUSEKEY_MAX_SPEED
+
 #define MOUSEKEY_INTERVAL 16
+#define MOUSEKEY_DELAY 0
+#define MOUSEKEY_TIME_TO_MAX 60
+#define MOUSEKEY_MAX_SPEED 7
+
+// #undef MOUSEKEY_DELAY
+// #define MOUSEKEY_DELAY 0
+// #undef MOUSEKEY_INTERVAL
+// #define MOUSEKEY_INTERVAL 16
+// #undef MOUSEKEY_MAX_SPEED
+// #define MOUSEKEY_MAX_SPEED 3 // 3
+// #undef MOUSEKEY_TIME_TO_MAX
+// #define MOUSEKEY_TIME_TO_MAX 42 // 42 // 52
 
 #undef MOUSEKEY_WHEEL_DELAY
 #define MOUSEKEY_WHEEL_DELAY 0
@@ -35,11 +49,6 @@
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 46
 #undef MOUSEKEY_WHEEL_MAX_SPEED
 #define MOUSEKEY_WHEEL_MAX_SPEED 8
-
-#undef MOUSEKEY_MAX_SPEED
-#define MOUSEKEY_MAX_SPEED 3 // 3
-#undef MOUSEKEY_TIME_TO_MAX
-#define MOUSEKEY_TIME_TO_MAX 42 // 42 // 52
 
 // hoeveel tijd je hebt om de leader key sequence te voltooien
 #define LEADER_TIMEOUT 300

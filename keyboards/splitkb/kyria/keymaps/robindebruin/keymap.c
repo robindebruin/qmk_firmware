@@ -13,6 +13,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+// #include "print.h"
+
 #include QMK_KEYBOARD_H
 
 typedef union {
@@ -70,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  | [ {  |MOUSE |  |CapsLk|  ] } |   N  |   M  | ,  < | . >  | /  ? | esc/RAltShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |LCtrl/| alt  | cmd  |QKLEAD| Nmbrs|  | Nav  |Option| Space| CMD  |  ~   |
+ *                        |LCtrl/| alt  | cmd  |QKLEAD| Nmbrs|  | Nav  |Option| Space| CMD  |  ~grave   |
  *                        |   ⌥  |      |      |      | layer|  | Layer|      |   ⌥  |      |  `   |
  *                        `----------------------------------'  `----------------------------------'
  */
@@ -78,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB ,         KC_Q,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
      KC_LSFT, LCTL_T(KC_A),  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    RALT_T(KC_L) ,   RCTL_T(KC_SCLN),      RSFT_T(KC_QUOTE),
      LCTL_T(KC_ESC),   KC_Z,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),     KC_CAPS, TG(MOUSE),      KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
-                      LALT_T(KC_ENTER),  LCMD_T(KC_ENTER) ,  KC_LEAD	, KC_ENTER,    MO(SYM),     LT(NAV,KC_ENTER)  , LT(FKEYS, KC_SPC) , LT(SYM,KC_SPC) ,   TG(MOUSE) , KC_GRAVE  
+                      LALT_T(KC_ENTER),  LCMD_T(KC_ENTER) ,  KC_LEAD	, KC_ENTER,    _______,     _______ , LT(FKEYS, KC_SPC) ,  KC_LEAD, LT(SYM,KC_SPC) , _______  
     ),
 
 /* 
@@ -122,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // en dan mouse layer van G naar T of B, en dan acl012 ook naar de linkerhand
     [_MOUSE] = LAYOUT(
         _______, KC_ACL0, KC_BTN2, _______, KC_BTN1, _______,                                     KC_WBCK, KC_BTN1, KC_MS_U, KC_BTN2, KC_WFRWD, _______,
-        _______, _______, _______, _______, KC_CAPP, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, _______, 
+        _______, _______, _______, _______, _______, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, _______, 
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
         ),
@@ -168,61 +170,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // Mac users, change LCTL to LALT:
             SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))));
         }
-        return false;
-        // case Undo:
-        //     if (record->event.pressed) {
-        //         if (user_config.osIsWindows == 1) {
-        //             tap_code16(C(KC_Z));
-        //         } else if (user_config.osIsWindows == 0) {
-        //             tap_code16(G(KC_Z));
-        //         }
-        //     }
-        //     break;
-        // case Cut:
-        //     if (record->event.pressed) {
-        //         if (user_config.osIsWindows == 1) {
-        //             tap_code16(C(KC_X));
-        //         } else if (user_config.osIsWindows == 0) {
-        //             tap_code16(G(KC_X));
-        //         }
-        //     }
-        //     break;
-        // case Copy:
-        //     if (record->event.pressed) {
-        //         if (user_config.osIsWindows == 1) {
-        //             tap_code16(C(KC_C));
-        //         } else if (user_config.osIsWindows == 0) {
-        //             tap_code16(G(KC_C));
-        //         }
-        //     }
-        //     break;
-        // case Paste:
-        //     if (record->event.pressed) {
-        //         if (user_config.osIsWindows == 1) {
-        //             tap_code16(C(KC_V));
-        //         } else if (user_config.osIsWindows == 0) {
-        //             tap_code16(G(KC_V));
-        //         }
-        //     }
-        //     break;
-        // case PrvWord:
-        //     if (record->event.pressed) {
-        //         if (user_config.osIsWindows == 1) {
-        //             tap_code16(C(KC_LEFT));
-        //         } else if (user_config.osIsWindows == 0) {
-        //             tap_code16(A(KC_LEFT));
-        //         }
-        //     }
-        //     break;
-        // case NxtWord:
-        //     if (record->event.pressed) {
-        //         if (user_config.osIsWindows == 1) {
-        //             tap_code16(C(KC_RGHT));
-        //         } else if (user_config.osIsWindows == 0) {
-        //             tap_code16(A(KC_RGHT));
-        //         }
-        //     }
-        //     break;
+        return false; 
     }
     return true;
 };
@@ -230,34 +178,76 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // leader keys 
 // start with leader key followed by any sequence defined below
+// ss = send string feature_send_string
+// X prefix is nodig ipv KC
 LEADER_EXTERNS();
+
+void leader_start(void) {
+  // all leader operate from the base layer
+  // for future maybe make a var to remember current layer and activate again afterwards
+  // layer_on(0); 
+
+}
 void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
     leading = false;
     leader_end();
-
-    SEQ_ONE_KEY(KC_W) {    
+ 
+     SEQ_ONE_KEY(KC_W) {    
     // select word and copy
-    // ss = send string feature_send_string
-    // X prefix is nodig ipv KC
       SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("c"));
     }
-    SEQ_ONE_KEY(KC_L) {    
-      SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("c"));
-      // SEND_STRING(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)));
+    SEQ_TWO_KEYS(KC_W, KC_P) {    
+    // select word and paste
+      SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("v"));
     }
-
-    // todo add print screen
-
+    SEQ_TWO_KEYS(KC_L, KC_L) {    
+      // select line and copy
+      SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("c"));
+    }
     SEQ_ONE_KEY(KC_P) {
       // print portion of the screen      
       SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_4)))  );
       layer_on(_MOUSE);
-
     }
-    SEQ_TWO_KEYS(KC_D, KC_D) {
-    //   SEND_STRING(SS_LCTL("a") SS_LCTL("c"));
-      SEND_STRING("1234 jQMK is awesome.");
+    SEQ_ONE_KEY(KC_J) {
+      // mouse layer on
+      layer_on(_MOUSE); 
+    }  
+    SEQ_ONE_KEY(KC_MS_L) {
+      // turn mouse layer off, since J is now left mouse
+      layer_off(_MOUSE);
+    }
+    SEQ_ONE_KEY(KC_K) {
+      // NUMbers layer on
+      layer_on(_FUNCTION); 
+    }  
+    SEQ_ONE_KEY(KC_8) {
+      // turn NUMbers layer off, since K is now 8
+      layer_off(_FUNCTION);
+    }
+    SEQ_ONE_KEY(KC_L) {
+      // symbols layer on
+      layer_on(_SYM); 
+    }  
+    SEQ_ONE_KEY(KC_RABK) {
+      // turn _SYM layer off, since J is now KC_RABK
+      layer_off(_SYM);
+    }
+    SEQ_TWO_KEYS(KC_C, KC_L) {
+      SEND_STRING("console.log('',)");
+      SEND_STRING(SS_TAP(X_LEFT));
+      SEND_STRING(SS_TAP(X_LEFT));
+      SEND_STRING(SS_TAP(X_LEFT));
+    }
+    SEQ_TWO_KEYS(KC_R, KC_L) {
+      SEND_STRING("robin_de_bruin@live.nl");
+    }
+    SEQ_TWO_KEYS(KC_R, KC_B) {
+      SEND_STRING("robinbdb@gmail.com");
+    }
+    SEQ_TWO_KEYS(KC_R, KC_D) {
+      SEND_STRING("rdebruin1@gmail.com");
     }
     SEQ_THREE_KEYS(KC_D, KC_D, KC_S) {
       SEND_STRING("https://start.duckduckgo.com\n");
@@ -330,4 +320,66 @@ bool oled_task_user(void) {
     // }
     return false;
 }
-#endif
+#endif     
+
+// switch (get_highest_layer(layer_state | default_layer_state)) {
+//   case _MOUSE:
+//     layer_off(_MOUSE);
+//     break;
+//   default: 
+//   break;
+// } 
+// case Undo:
+//     if (record->event.pressed) {
+//         if (user_config.osIsWindows == 1) {
+//             tap_code16(C(KC_Z));
+//         } else if (user_config.osIsWindows == 0) {
+//             tap_code16(G(KC_Z));
+//         }
+//     }
+//     break;
+// case Cut:
+//     if (record->event.pressed) {
+//         if (user_config.osIsWindows == 1) {
+//             tap_code16(C(KC_X));
+//         } else if (user_config.osIsWindows == 0) {
+//             tap_code16(G(KC_X));
+//         }
+//     }
+//     break;
+// case Copy:
+//     if (record->event.pressed) {
+//         if (user_config.osIsWindows == 1) {
+//             tap_code16(C(KC_C));
+//         } else if (user_config.osIsWindows == 0) {
+//             tap_code16(G(KC_C));
+//         }
+//     }
+//     break;
+// case Paste:
+//     if (record->event.pressed) {
+//         if (user_config.osIsWindows == 1) {
+//             tap_code16(C(KC_V));
+//         } else if (user_config.osIsWindows == 0) {
+//             tap_code16(G(KC_V));
+//         }
+//     }
+//     break;
+// case PrvWord:
+//     if (record->event.pressed) {
+//         if (user_config.osIsWindows == 1) {
+//             tap_code16(C(KC_LEFT));
+//         } else if (user_config.osIsWindows == 0) {
+//             tap_code16(A(KC_LEFT));
+//         }
+//     }
+//     break;
+// case NxtWord:
+//     if (record->event.pressed) {
+//         if (user_config.osIsWindows == 1) {
+//             tap_code16(C(KC_RGHT));
+//         } else if (user_config.osIsWindows == 0) {
+//             tap_code16(A(KC_RGHT));
+//         }
+//     }
+//     break;
