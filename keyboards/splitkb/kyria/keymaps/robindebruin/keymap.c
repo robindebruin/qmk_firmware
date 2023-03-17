@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB ,         KC_Q,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
      KC_LSFT, LCTL_T(KC_A),  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    RALT_T(KC_L) ,   RCTL_T(KC_SCLN),      RSFT_T(KC_QUOTE),
      LCTL_T(KC_ESC),   KC_Z,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),     KC_CAPS, TG(MOUSE),      KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
-                      LALT_T(KC_ENTER),  LCMD_T(KC_ENTER) ,  KC_LEAD	, KC_ENTER,    _______,     _______ , LT(FKEYS, KC_SPC) ,  KC_LEAD, LT(SYM,KC_SPC) , _______  
+                      LALT_T(KC_ENTER),  LCMD_T(KC_ENTER) ,  KC_LEAD	, KC_ENTER,    _______,     _______ , LT(FKEYS, KC_SPC) ,  KC_LEAD, MO(SYM) , _______  
     ),
 
 /* 
@@ -133,8 +133,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Function Layer: Function keys
  */
     [_FUNCTION] = LAYOUT(
-      _______,  KC_F1  ,  KC_F2  ,  KC_F3  ,  KC_F4  ,  KC_F5 ,                                     KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10, _______,
       _______ ,   KC_1 ,    KC_2 ,   KC_3 ,     KC_4 ,   KC_5 ,                                       KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , _______ ,
+      _______,  KC_F1  ,  KC_F2  ,  KC_F3  ,  KC_F4  ,  KC_F5 ,                                     KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10, _______,
       _______,  _______,  _______,  _______,  KC_F11 ,_______, _______, _______, _______, _______, _______, KC_F12, _______, _______, _______, _______,
                                     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),  
