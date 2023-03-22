@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_TAB ,         KC_Q,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
      KC_LSFT, LCTL_T(KC_A),  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    RALT_T(KC_L) ,   RCTL_T(KC_SCLN),      RSFT_T(KC_QUOTE),
-     LCTL_T(KC_ESC),   KC_Z,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),     KC_CAPS, TG(MOUSE),      KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, RSFT_T(KC_ESC),
+     LCTL_T(KC_ESC),   KC_Z,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),     KC_CAPS, TG(MOUSE),      KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, KC_ESC,
                       LALT_T(KC_ENTER),  LCMD_T(KC_ENTER) ,  KC_LEAD	, KC_ENTER,    _______,     _______ , LT(FKEYS, KC_SPC) ,  KC_LEAD, MO(SYM) , _______  
     ),
 
@@ -182,18 +182,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // X prefix is nodig ipv KC
 LEADER_EXTERNS();
 
-void leader_start(void) {
-  // all leader operate from the base layer
-  // for future maybe make a var to remember current layer and activate again afterwards
-  // layer_on(0); 
-
+layer_state_t current_layer_state;
+void leader_start(void) {  
+      current_layer_state = get_highest_layer(layer_state | default_layer_state);
+      layer_clear();
 }
+
+void leader_end(void) {
+  // Add your code to run when a leader key sequence ends here
+  // layer_on(current_layer_state);
+}
+
 void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
     leading = false;
-    leader_end();
- 
-     SEQ_ONE_KEY(KC_W) {    
+
+    // __CHROME__ //
+    // U: left tab 
+    SEQ_ONE_KEY(KC_U) {    
+    // option cmd left
+      SEND_STRING(SS_LALT(SS_LGUI(SS_TAP(X_LEFT))));
+    } 
+    // O: right tab
+    SEQ_ONE_KEY(KC_O) {    
+      SEND_STRING(SS_LALT(SS_LGUI(SS_TAP(X_RGHT))));
+    }
+    // UU: back history
+    SEQ_TWO_KEYS(KC_U, KC_U) {    
+      // cmd left
+      SEND_STRING(SS_LGUI(SS_TAP(X_LEFT)));
+    }
+    // OO: fwd history
+    SEQ_TWO_KEYS(KC_O, KC_O) {    
+      SEND_STRING(SS_LGUI(SS_TAP(X_RGHT)));
+    }
+    
+
+    SEQ_ONE_KEY(KC_W) {    
     // select word and copy
       SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("c"));
     }
@@ -201,39 +226,58 @@ void matrix_scan_user(void) {
     // select word and paste
       SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("v"));
     }
-    SEQ_TWO_KEYS(KC_L, KC_L) {    
-      // select line and copy
+ 
+    // LS: select line
+    SEQ_TWO_KEYS(KC_L, KC_S) {    
+      SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))));
+    } 
+    // LC: select line and copy
+    SEQ_TWO_KEYS(KC_L, KC_C) {    
       SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("c"));
+    }  
+    // LX: select line and cut
+    SEQ_TWO_KEYS(KC_L, KC_X) {    
+      SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("x"));
+    }     
+    // LD: select line and delete
+    SEQ_TWO_KEYS(KC_L, KC_D) {    
+      SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT)))); 
+      register_code(KC_BSPC);
+      unregister_code(KC_BSPC); 
+      // cmd left bspc 
+      SEND_STRING(SS_LGUI(SS_TAP(X_LEFT ))); 
+      register_code(KC_BSPC);
+      unregister_code(KC_BSPC); 
     }
+
+
+    // PRINT SCREEN
     SEQ_ONE_KEY(KC_P) {
       // print portion of the screen      
       SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_4)))  );
       layer_on(_MOUSE);
     }
+
+    // __LAYER SWITCHING__ //
+    //
+    // J: MOUSE LAYER
     SEQ_ONE_KEY(KC_J) {
-      // mouse layer on
       layer_on(_MOUSE); 
     }  
-    SEQ_ONE_KEY(KC_MS_L) {
-      // turn mouse layer off, since J is now left mouse
-      layer_off(_MOUSE);
-    }
+    // K: NUMBERS LAYER
     SEQ_ONE_KEY(KC_K) {
-      // NUMbers layer on
       layer_on(_FUNCTION); 
-    }  
-    SEQ_ONE_KEY(KC_8) {
-      // turn NUMbers layer off, since K is now 8
-      layer_off(_FUNCTION);
-    }
+    }   
+    // L: SYMBOLS LAYER 
     SEQ_ONE_KEY(KC_L) {
-      // symbols layer on
       layer_on(_SYM); 
-    }  
-    SEQ_ONE_KEY(KC_RABK) {
-      // turn _SYM layer off, since J is now KC_RABK
-      layer_off(_SYM);
-    }
+    }    
+    // ';' NAVIGATION LAYER 
+    SEQ_ONE_KEY(KC_SCLN) {
+      layer_on(_NAV); 
+    } 
+
+    // __STRING SEQUENCES__ //
     SEQ_TWO_KEYS(KC_C, KC_L) {
       SEND_STRING("console.log('',)");
       SEND_STRING(SS_TAP(X_LEFT));
@@ -252,12 +296,14 @@ void matrix_scan_user(void) {
     SEQ_THREE_KEYS(KC_D, KC_D, KC_S) {
       SEND_STRING("https://start.duckduckgo.com\n");
     }
-    SEQ_TWO_KEYS(KC_A, KC_S) {
-      register_code(KC_LGUI);
-      register_code(KC_S);
-      unregister_code(KC_S);
-      unregister_code(KC_LGUI);
-    }
+    // SEQ_TWO_KEYS(KC_A, KC_S) {
+    //   register_code(KC_LGUI);
+    //   register_code(KC_S);
+    //   unregister_code(KC_S);
+    //   unregister_code(KC_LGUI);
+    // } 
+
+    leader_end(); 
   }
 }
 
