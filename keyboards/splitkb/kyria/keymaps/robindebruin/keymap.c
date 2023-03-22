@@ -197,10 +197,22 @@ void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
     leading = false;
 
+    // MAC
+    // Y: PREV FULL SCREEN
+    SEQ_ONE_KEY(KC_Y) {    
+    // ctrl left arrow
+      SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)));
+    } 
+    // P: NEXT FULL SCREEN
+    SEQ_ONE_KEY(KC_P) {    
+    // ctrl right arrow
+      SEND_STRING(SS_LCTL(SS_TAP(X_RGHT)));
+    } 
+
     // __CHROME__ //
     // U: left tab 
     SEQ_ONE_KEY(KC_U) {    
-    // option cmd left
+    // option cmd left arrow
       SEND_STRING(SS_LALT(SS_LGUI(SS_TAP(X_LEFT))));
     } 
     // O: right tab
@@ -209,7 +221,7 @@ void matrix_scan_user(void) {
     }
     // UU: back history
     SEQ_TWO_KEYS(KC_U, KC_U) {    
-      // cmd left
+      // cmd left arrow
       SEND_STRING(SS_LGUI(SS_TAP(X_LEFT)));
     }
     // OO: fwd history
