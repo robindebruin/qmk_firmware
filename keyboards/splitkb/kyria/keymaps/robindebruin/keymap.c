@@ -46,19 +46,7 @@ enum custom_keycodes {
 #define NAV MO(_NAV)
 #define FKEYS MO(_FUNCTION)
 #define MOUSE MO(_MOUSE)
-
-#define CTL_ESC MT(MOD_LCTL, KC_ESC)
-#define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
-#define CTL_MINS MT(MOD_RCTL, KC_MINUS)
-#define ALT_ENT MT(MOD_LALT, KC_ENT)
-#define KC_CAPW LGUI(LSFT(KC_3))       // Capture whole screen
-#define KC_CPYW LGUI(LSFT(LCTL(KC_3))) // Copy whole screen
-#define KC_CAPP LGUI(LSFT(KC_4))       // Capture portion of screen
-#define KC_CPYP LGUI(LSFT(LCTL(KC_4))) // Copy portion of screen
-#define KC_WBCK LGUI(KC_LEFT)          // Chrome back in history
-#define KC_WFRWD LGUI(KC_RIGHT)        // Chrome forward in history
-#define KC_WLFT LGUI(LALT(KC_LEFT))    // Chrome go to left tab
-#define KC_WRGHT LGUI(LALT(KC_RIGHT))  // Chrome go to right tab
+// #define KC_CPYW LGUI(LSFT(LCTL(KC_3)))
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -92,8 +80,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * 
  */
     [_SYM] = LAYOUT(
-     _______ , KC_EXLM,   KC_AT, KC_HASH,  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_PLUS, _______,
-     _______ , KC_EQL , KC_LABK, KC_LPRN,  KC_LCBR, KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_RABK, KC_UNDS, _______,
+     _______ , KC_EXLM,   KC_AT, LT(MOUSE,KC_HASH),  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_PLUS, _______,
+     _______ , KC_EQL , KC_LABK, KC_LPRN,  LT(NAV, KC_LCBR), KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_RABK, KC_UNDS, _______,
      _______ , _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, KC_TILD, KC_PIPE, KC_SLSH, KC_BSLS, _______,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -123,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // deze laag onhoog zodat die de media knoppen erft?
     // en dan mouse layer van G naar T of B, en dan acl012 ook naar de linkerhand
     [_MOUSE] = LAYOUT(
-        _______, KC_ACL0, KC_BTN2, _______, KC_BTN1, _______,                                     KC_WBCK, KC_BTN1, KC_MS_U, KC_BTN2, KC_WFRWD, _______,
+        _______, KC_ACL0, KC_BTN2, _______, KC_BTN1, _______,                                     _______, KC_BTN1, KC_MS_U, KC_BTN2, _______, _______,
         _______, _______, _______, _______, _______, _______,                                     KC_WH_U, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, _______, 
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -197,46 +185,78 @@ void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
     leading = false;
 
+    // __TERMINAL__ //
+    // YY: cmd curly bracket left 
+    // SEQ_TWO_KEYS(KC_Y, KC_Y) {    
+    //   // register_code(KC_LGUI);
+    //   // register_code(KC_LBRC);
+    //   // unregister_code(KC_LBRC);
+    //   // unregister_code(KC_LGUI);      
+    // }
+    // // PP: cmd curly bracket right 
+    // SEQ_TWO_KEYS(KC_P, KC_P) {    
+    //   // SEND_STRING(SS_LGUI(SS_TAP(X_RCBR))) 
+    //      SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_RCBR)))); 
+    // }
+
     // MAC
-    // Y: PREV FULL SCREEN
-    SEQ_ONE_KEY(KC_Y) {    
-    // ctrl left arrow
+    // Y: ctrl left arrow  
+    // PREV FULL SCREEN
+    SEQ_ONE_KEY(KC_Y) {        
       SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)));
     } 
-    // P: NEXT FULL SCREEN
+    // P: ctrl right arrow  
+    // NEXT FULL SCREEN
     SEQ_ONE_KEY(KC_P) {    
     // ctrl right arrow
       SEND_STRING(SS_LCTL(SS_TAP(X_RGHT)));
     } 
 
     // __CHROME__ //
-    // U: left tab 
+    // U: option cmd left arrow 
+    // left tab 
     SEQ_ONE_KEY(KC_U) {    
     // option cmd left arrow
       SEND_STRING(SS_LALT(SS_LGUI(SS_TAP(X_LEFT))));
     } 
-    // O: right tab
+    // O: option cmd right arrow 
+    // right tab
     SEQ_ONE_KEY(KC_O) {    
       SEND_STRING(SS_LALT(SS_LGUI(SS_TAP(X_RGHT))));
     }
-    // UU: back history
-    SEQ_TWO_KEYS(KC_U, KC_U) {    
-      // cmd left arrow
+    // UU: cmd left arrow  
+    // back history
+    SEQ_TWO_KEYS(KC_U, KC_U) {          
       SEND_STRING(SS_LGUI(SS_TAP(X_LEFT)));
     }
-    // OO: fwd history
+    // OO: cmd right arrow
+    // fwd history
     SEQ_TWO_KEYS(KC_O, KC_O) {    
       SEND_STRING(SS_LGUI(SS_TAP(X_RGHT)));
     }
     
-
-    SEQ_ONE_KEY(KC_W) {    
-    // select word and copy
+    // W: word select
+    SEQ_ONE_KEY(KC_W) {        
+      SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) );
+    }
+    // WC: word copy
+      SEQ_TWO_KEYS(KC_W, KC_C) {    
       SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("c"));
     }
-    SEQ_TWO_KEYS(KC_W, KC_P) {    
-    // select word and paste
+    // WP: word paste
+    SEQ_TWO_KEYS(KC_W, KC_P) {        
       SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("v"));
+    } 
+
+    // WC: word bold
+      SEQ_TWO_KEYS(KC_W, KC_C) {    
+      SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("b"));
+    }
+      // WD: word paste
+    SEQ_TWO_KEYS(KC_W, KC_D) {        
+      SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))));
+      register_code(KC_BSPC);
+      unregister_code(KC_BSPC); 
     }
  
     // LS: select line
@@ -250,6 +270,10 @@ void matrix_scan_user(void) {
     // LX: select line and cut
     SEQ_TWO_KEYS(KC_L, KC_X) {    
       SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("x"));
+    }   
+     // LB: select line and bold
+    SEQ_TWO_KEYS(KC_L, KC_X) {    
+      SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("b"));
     }     
     // LD: select line and delete
     SEQ_TWO_KEYS(KC_L, KC_D) {    
@@ -263,8 +287,8 @@ void matrix_scan_user(void) {
     }
 
 
-    // PRINT SCREEN
-    SEQ_ONE_KEY(KC_P) {
+    // PS: PRINT SCREEN
+    SEQ_TWO_KEYS(KC_P, KC_S) {
       // print portion of the screen      
       SEND_STRING(SS_LGUI(SS_LSFT(SS_TAP(X_4)))  );
       layer_on(_MOUSE);
