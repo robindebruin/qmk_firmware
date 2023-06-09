@@ -67,22 +67,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_TAB ,         KC_Q,  KC_W ,  LT(MOUSE,KC_E)  ,       KC_R ,        KC_T ,                                         KC_Y,        KC_U ,           KC_I ,            KC_O ,     KC_P ,        KC_BSPC,
      KC_LSFT, LCTL_T(KC_A),  LALT_T(KC_S)   ,  CMD_T(KC_D)  ,    LT(NAV,KC_F),    KC_G ,                             KC_H, KC_J,   RCMD_T(KC_K) ,    RALT_T(KC_L) ,   RCTL_T(KC_SCLN),      RSFT_T(KC_QUOTE),
-     LCTL_T(KC_ESC),   KC_Z,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),     KC_CAPS, TG(MOUSE),      KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, KC_ESC,
-                      LALT_T(KC_ENTER),  LCMD_T(KC_ENTER) ,  KC_LEAD	, KC_ENTER,    _______,     _______ , LT(FKEYS, KC_SPC) ,  KC_LEAD, MO(SYM) , _______  
+     QK_GRAVE_ESCAPE,   KC_Z,  KC_X   ,  KC_C  ,           KC_V ,            KC_B , KC_LBRC, OSL(FKEYS),     KC_CAPS, TG(MOUSE),      KC_N,        KC_M ,         KC_COMM,          KC_DOT ,   KC_SLSH, KC_ESC,
+                      KC_LCTL,  KC_LALT ,  KC_LGUI	, KC_ENTER,    _______,     _______ , LT(FKEYS, KC_SPC) ,  KC_LEAD, MO(SYM) , _______  
     ),
 
 /* 
  * Symbols
  *
  * !@#$%  ^&*+
- * =>({[  ]})_-
- * ±-
+ * =<({[  ]})_-
+ * zxc§b n±|/\ )|||±±±±±±±±±±±§§§±>vv>cc```````````~```````````~```cc````
  * 
  */
     [_SYM] = LAYOUT(
-     _______ , KC_EXLM,   KC_AT, LT(MOUSE,KC_HASH),  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_PLUS, _______,
-     _______ , KC_EQL , KC_LABK, KC_LPRN,  LT(NAV, KC_LCBR), KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_RABK, KC_UNDS, _______,
-     _______ , _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, KC_TILD, KC_PIPE, KC_SLSH, KC_BSLS, _______,
+     _______ , KC_EXLM,   KC_AT, KC_HASH,  KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_PLUS, _______,
+     _______ , KC_EQL , KC_LABK, KC_LPRN,  KC_LCBR, KC_LBRC,                                     KC_RBRC, KC_RCBR, KC_RPRN, KC_RABK, KC_UNDS, _______,
+     _______ , _______, _______,  KC_TILDE, KC_GRV , _______, _______, _______, _______, _______, _______, KC_TILD, KC_PIPE, KC_SLSH, KC_BSLS, _______,
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
@@ -249,7 +249,7 @@ void matrix_scan_user(void) {
     } 
 
     // WC: word bold
-      SEQ_TWO_KEYS(KC_W, KC_C) {    
+      SEQ_TWO_KEYS(KC_W, KC_B) {    
       SEND_STRING(SS_LALT(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("b"));
     }
       // WD: word paste
@@ -272,7 +272,7 @@ void matrix_scan_user(void) {
       SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("x"));
     }   
      // LB: select line and bold
-    SEQ_TWO_KEYS(KC_L, KC_X) {    
+    SEQ_TWO_KEYS(KC_L, KC_B) {    
       SEND_STRING(SS_LGUI(SS_TAP(X_RGHT) SS_LSFT(SS_TAP(X_LEFT))) SS_LGUI("b"));
     }     
     // LD: select line and delete
@@ -320,18 +320,7 @@ void matrix_scan_user(void) {
       SEND_STRING(SS_TAP(X_LEFT));
       SEND_STRING(SS_TAP(X_LEFT));
     }
-    SEQ_TWO_KEYS(KC_R, KC_L) {
-      SEND_STRING("robin_de_bruin@live.nl");
-    }
-    SEQ_TWO_KEYS(KC_R, KC_B) {
-      SEND_STRING("robinbdb@gmail.com");
-    }
-    SEQ_TWO_KEYS(KC_R, KC_D) {
-      SEND_STRING("rdebruin1@gmail.com");
-    }
-    SEQ_THREE_KEYS(KC_D, KC_D, KC_S) {
-      SEND_STRING("https://start.duckduckgo.com\n");
-    }
+   
     // SEQ_TWO_KEYS(KC_A, KC_S) {
     //   register_code(KC_LGUI);
     //   register_code(KC_S);
@@ -373,7 +362,7 @@ bool oled_task_user(void) {
                 oled_write_P(PSTR("\n"), false);
                 oled_write_P(PSTR("= > ( { [ ] } ) _ "), false);
                 oled_write_P(PSTR("\n\n"), false);
-                oled_write_P(PSTR("             | / \\"), false);
+                oled_write_P(PSTR("    ~ `     | / \\"), false);
                 break;
             case _FUNCTION:
                 oled_write_P(PSTR("Nummers + FN\n\n"), false);
